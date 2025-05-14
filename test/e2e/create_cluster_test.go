@@ -1288,6 +1288,7 @@ func TestCreateClusterCustomConfig(t *testing.T) {
 			hc.Spec.Capabilities = &hyperv1.Capabilities{
 				Disabled: []hyperv1.OptionalCapability{
 					hyperv1.ImageRegistryCapability,
+					hyperv1.ConsoleCapability,
 				},
 			}
 		}
@@ -1311,8 +1312,13 @@ func TestCreateClusterCustomConfig(t *testing.T) {
 		// test oauth with identity provider
 		e2eutil.EnsureOAuthWithIdentityProvider(t, ctx, mgtClient, hostedCluster)
 
+		clients := e2eutil.InitGuestClients(ctx, t, g, mgtClient, hostedCluster)
+
 		// ensure image registry component is disabled
-		e2eutil.EnsureImageRegistryCapabilityDisabled(ctx, t, g, mgtClient, hostedCluster)
+		e2eutil.EnsureImageRegistryCapabilityDisabled(ctx, t, g, clients)
+
+		// ensure console component is disabled
+		e2eutil.EnsureConsoleCapabilityDisabled(ctx, t, g, clients)
 
 		// ensure KAS DNS name is configured with a KAS Serving cert
 		e2eutil.EnsureKubeAPIDNSNameCustomCert(t, ctx, mgtClient, hostedCluster)
