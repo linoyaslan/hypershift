@@ -369,12 +369,14 @@ const (
 	PruneRetentionPolicy RetentionPolicy = "Prune"
 )
 
-// +kubebuilder:validation:Enum=ImageRegistry;Console
+// +kubebuilder:validation:Enum=ImageRegistry;Console;Build
 type OptionalCapability string
 
 const ImageRegistryCapability OptionalCapability = OptionalCapability(configv1.ClusterVersionCapabilityImageRegistry)
 
 const ConsoleCapability OptionalCapability = OptionalCapability(configv1.ClusterVersionCapabilityConsole)
+
+const BuildCapability OptionalCapability = OptionalCapability(configv1.ClusterVersionCapabilityBuild)
 
 // capabilities allows disabling optional components at install time.
 // Once set, it cannot be changed.

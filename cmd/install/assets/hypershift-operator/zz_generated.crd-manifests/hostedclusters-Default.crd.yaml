@@ -173,6 +173,7 @@ spec:
                       enum:
                       - ImageRegistry
                       - Console
+                      - Build
                       type: string
                     maxItems: 25
                     type: array
