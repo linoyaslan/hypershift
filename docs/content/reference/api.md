@@ -9732,6 +9732,8 @@ ClusterVersionOperatorSpec
 <td></td>
 </tr><tr><td><p>&#34;ImageRegistry&#34;</p></td>
 <td></td>
+</tr><tr><td><p>&#34;openshift-samples&#34;</p></td>
+<td></td>
 </tr></tbody>
 </table>
 ###PayloadArchType { #hypershift.openshift.io/v1beta1.PayloadArchType }
