@@ -185,6 +185,7 @@ spec:
                       enum:
                       - ImageRegistry
                       - openshift-samples
+                      - NodeTuning
                       type: string
                     maxItems: 25
                     type: array

@@ -379,12 +379,14 @@ const (
 	PruneRetentionPolicy RetentionPolicy = "Prune"
 )
 
-// +kubebuilder:validation:Enum=ImageRegistry;openshift-samples
+// +kubebuilder:validation:Enum=ImageRegistry;openshift-samples;NodeTuning
 type OptionalCapability string
 
 const ImageRegistryCapability OptionalCapability = OptionalCapability(configv1.ClusterVersionCapabilityImageRegistry)
 
 const OpenShiftSamplesCapability OptionalCapability = OptionalCapability(configv1.ClusterVersionCapabilityOpenShiftSamples)
+
+const NodeTuningCapability = OptionalCapability(configv1.ClusterVersionCapabilityNodeTuning)
 
 // capabilities allows disabling optional components at install time.
 // Once set, it cannot be changed.

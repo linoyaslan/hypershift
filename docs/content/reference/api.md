@@ -9739,6 +9739,8 @@ ClusterVersionOperatorSpec
 </thead>
 <tbody><tr><td><p>&#34;ImageRegistry&#34;</p></td>
 <td></td>
+</tr><tr><td><p>&#34;NodeTuning&#34;</p></td>
+<td></td>
 </tr><tr><td><p>&#34;openshift-samples&#34;</p></td>
 <td></td>
 </tr></tbody>
