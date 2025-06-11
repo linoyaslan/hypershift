@@ -23,7 +23,7 @@ data:
       maxScheduledImageImportsPerMinute: 0
       scheduledImageImportMinimumIntervalSeconds: 0
     ingress:
-      ingressIPNetworkCIDR: 99.1.0.0/24
+      ingressIPNetworkCIDR: ""
     kind: OpenShiftControllerManagerConfig
     kubeClientConfig:
       connectionOverrides:
