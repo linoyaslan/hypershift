@@ -156,7 +156,6 @@ spec:
         - --required-api=config.openshift.io,v1,OperatorHub
         - --required-api=operator.openshift.io,v1,Network
         - --required-api=operator.openshift.io,v1,CloudCredential
-        - --required-api=operator.openshift.io,v1,IngressController
         image: availability-prober
         imagePullPolicy: IfNotPresent
         name: availability-prober

@@ -148,6 +148,57 @@ func TestOnCreateAPIUX(t *testing.T) {
 						expectedErrorSubstring: "Capabilities can not be both enabled and disabled at once.",
 					},
 					{
+						name: "when Ingress capability is disabled but Console capability is enabled, it should fail",
+						mutateInput: func(hc *hyperv1.HostedCluster) {
+							hc.Spec.Capabilities = &hyperv1.Capabilities{
+								Enabled: []hyperv1.OptionalCapability{
+									hyperv1.ConsoleCapability,
+								},
+								Disabled: []hyperv1.OptionalCapability{
+									hyperv1.IngressCapability,
+								},
+							}
+						},
+						expectedErrorSubstring: "Ingress capability can only be disabled if Console capability is also disabled",
+					},
+					{
+						name: "when both Ingress and Console capabilities are disabled, it should pass",
+						mutateInput: func(hc *hyperv1.HostedCluster) {
+							hc.Spec.Capabilities = &hyperv1.Capabilities{
+								Disabled: []hyperv1.OptionalCapability{
+									hyperv1.IngressCapability,
+									hyperv1.ConsoleCapability,
+								},
+							}
+						},
+						expectedErrorSubstring: "",
+					},
+					{
+						name: "when neither Ingress nor Console capability is disabled, it should pass",
+						mutateInput: func(hc *hyperv1.HostedCluster) {
+							hc.Spec.Capabilities = &hyperv1.Capabilities{
+								Disabled: []hyperv1.OptionalCapability{
+									hyperv1.ImageRegistryCapability,
+								},
+							}
+						},
+						expectedErrorSubstring: "",
+					},
+					{
+						name: "when Ingress capability is enabled but Console capability is disabled, it should pass",
+						mutateInput: func(hc *hyperv1.HostedCluster) {
+							hc.Spec.Capabilities = &hyperv1.Capabilities{
+								Enabled: []hyperv1.OptionalCapability{
+									hyperv1.IngressCapability,
+								},
+								Disabled: []hyperv1.OptionalCapability{
+									hyperv1.ConsoleCapability,
+								},
+							}
+						},
+						expectedErrorSubstring: "",
+					},
+					{
 						name: "when baseDomain has invalid chars it should fail",
 						mutateInput: func(hc *hyperv1.HostedCluster) {
 							hc.Spec.DNS.BaseDomain = "@foo"
@@ -1425,6 +1476,7 @@ func TestCreateClusterCustomConfig(t *testing.T) {
 				hyperv1.ImageRegistryCapability,
 				hyperv1.OpenShiftSamplesCapability,
 				hyperv1.InsightsCapability,
+				hyperv1.IngressCapability,
 				hyperv1.NodeTuningCapability,
 			}
 			if e2eutil.IsGreaterThanOrEqualTo(e2eutil.Version420) {
@@ -1468,6 +1520,9 @@ func TestCreateClusterCustomConfig(t *testing.T) {
 
 		// ensure console component is disabled
 		e2eutil.EnsureConsoleCapabilityDisabled(ctx, t, g, clients)
+
+		// ensure ingress component is disabled
+		e2eutil.EnsureIngressCapabilityDisabled(ctx, t, g, clients, mgtClient, hostedCluster)
 
 		// ensure NodeTuning component is disabled
 		e2eutil.EnsureNodeTuningCapabilityDisabled(ctx, t, g, clients, mgtClient, hostedCluster)
